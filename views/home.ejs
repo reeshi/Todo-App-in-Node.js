@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Todo App</title>
+</head>
+<body>
+    <!-- form  -->
+    <div id="todo-form-container">
+
+        <h1 style="text-align: center;">TODO App</h1>
+
+        <form action="/create-task" method="post" id="task-form">
+            <label for="description">DESCRIPTION:</label>
+            <br>
+            <input type="text" name="description" id="description" placeholder="what do you need to do" required>
+            
+            <div id="category-date-container">
+                <div>
+                    <label for="categorys">CATEGORY:</label>
+                    <br>
+                    <input list="category" name="category" placeholder="choose a category" id="categorys" required>
+                    <datalist id="category">
+                        <option value="Personal">
+                        <option value="Work">
+                        <option value="School">
+                        <option value="Cleaning">
+                        <option value="Other">
+                    </datalist>
+                </div>
+                <div>
+                    <label for="data">DUE DATE:</label>
+                    <br>
+                    <input type="date" name="date" id="date" required>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 1.3rem;">
+                <input type="submit" value="Add Task" id="add-btn" style="background-color: black;">
+            </div>
+        </form>
+
+    </div>
+
+    <!-- display the tasks  -->
+    <div id="task-list-container">
+            <form action="/delete-task" method="get">
+                <% for(let task of tasks) {%>
+                    <div class="task-item">
+                        
+                        <input type="checkbox" name="<%= task._id %>">
+                        
+                        <div class="strikethrough">
+                            <span style="font-size: 1.5rem;"><%= task.description %></span>
+                            <br>
+                            <small style="color: gray;">
+                                <i class="fal fa-calendar-alt"></i>
+                                <%= task.dueDate.toDateString().slice(4) %>
+                            </small>
+                        </div>
+                        <div class="category">
+                            <%= task.category %>
+                        </div>
+                    </div>
+                    <% } %>
+                    <div style="text-align: center;">
+                        <input type="submit" value="Delete Tasks" id="delete-btn" style="background-color: red;">
+                    </div>
+            </form>
+    </div>
+
+</body>
+</html>
